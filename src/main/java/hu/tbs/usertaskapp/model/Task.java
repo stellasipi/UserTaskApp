@@ -1,5 +1,6 @@
 package hu.tbs.usertaskapp.model;
 
+import hu.tbs.usertaskapp.util.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,17 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
+
+    @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
     private LocalDateTime dateTime;
 
     @ManyToOne

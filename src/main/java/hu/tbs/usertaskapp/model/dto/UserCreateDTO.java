@@ -4,17 +4,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @Setter
-public class UserDTO {
+public class UserCreateDTO extends UserUpdateDTO {
 
-    private Integer id;
-
+    @NotBlank
+    @NotEmpty
     private String username;
 
+    @NotBlank
+    @NotEmpty
     @JsonProperty("first_name")
     private String firstName;
 
+    @NotBlank
+    @NotEmpty
     @JsonProperty("last_name")
     private String lastName;
+
 }
