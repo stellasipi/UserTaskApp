@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
-public class UserCreateDTO extends UserUpdateDTO {
+public class UserCreateDTO {
 
     @NotBlank
     @NotEmpty
