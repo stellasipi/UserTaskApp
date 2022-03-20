@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  usertask:
+    build:
+      context: .
+    image: maven/builder:0.0.1
+    container_name: usertaskapp_api #spring_container_api
+    ports:
+      - "8080:8080"
+    environment:
+      - POSTGRES_USER=usertask_user
+      - POSTGRES_PASSWORD=usertask_password
+      - POSTGRES_DB=usertaskdb
+    volumes:
+      - "./src:/build/src"
+      - "./target:/build/target:cached"
+    command: "mvn spring-boot:run"
+    depends_on:
+      - usertask_db
+  usertask_db:
+    container_name: usertask_db
+    image: "postgres:12"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=usertask_user
+      - POSTGRES_PASSWORD=usertask_password
+      - POSTGRES_DB=usertaskdb
+    volumes:
+      - usertask_data:/var/lib/postgresql/data
+volumes:
+  usertask_data: {}
