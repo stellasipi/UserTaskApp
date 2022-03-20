@@ -10,8 +10,8 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 public class TaskUpdateDTO {
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Name can't be null or whitespaces")
+    @NotEmpty(message = "Name can't be null or empty")
     private String name;
 
 }

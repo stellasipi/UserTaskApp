@@ -11,17 +11,17 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 public class UserCreateDTO {
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Username can't be null or whitespaces")
+    @NotEmpty(message = "Username can't be null or empty")
     private String username;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "First name can't be null or whitespaces")
+    @NotEmpty(message = "First name can't be null or empty")
     @JsonProperty("first_name")
     private String firstName;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Last name can't be null or whitespaces")
+    @NotEmpty(message = "Last name can't be null or empty")
     @JsonProperty("last_name")
     private String lastName;
 

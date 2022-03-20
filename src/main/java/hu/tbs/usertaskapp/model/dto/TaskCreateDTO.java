@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @Setter
 public class TaskCreateDTO extends TaskUpdateDTO {
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Description can't be null or whitespaces")
+    @NotEmpty(message = "Description can't be null or empty")
     private String description;
 
-    @NotBlank
-    @NotEmpty
+    @NotBlank(message = "Date time can't be null or whitespaces")
+    @NotEmpty(message = "Date time can't be null or empty")
     @JsonProperty("date_time")
     private LocalDateTime dateTime;
 

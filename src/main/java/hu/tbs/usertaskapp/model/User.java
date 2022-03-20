@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,6 +41,6 @@ public class User {
     private String lastName;
 
     @OneToMany(orphanRemoval = true, mappedBy = "user")
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
 }
