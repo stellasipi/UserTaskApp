@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,6 +18,6 @@ public class TaskCreateDTO extends TaskUpdateDTO {
     @NotBlank(message = "Date time can't be null or whitespaces")
     @NotEmpty(message = "Date time can't be null or empty")
     @JsonProperty("date_time")
-    private LocalDateTime dateTime;
+    private String dateTime;
 
 }

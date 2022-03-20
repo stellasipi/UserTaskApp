@@ -12,10 +12,6 @@ public interface TaskMapper {
 
     Task taskUpdateDtoToTask(TaskUpdateDTO taskUpdateDTO);
 
-    TaskCreateDTO taskToTaskCreateDto(Task task);
-
-    Task taskCreateDtoToTask(TaskCreateDTO taskCreateDTO);
-
     TaskInfoDTO taskToTaskInfoDto(Task task);
 
     Task taskInfoDtoToTask(TaskCreateDTO taskInfoDTO);

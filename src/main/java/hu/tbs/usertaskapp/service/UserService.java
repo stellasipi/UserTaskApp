@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,7 +47,6 @@ public class UserService {
             throw new UserException("Username is already exists");
         } else {
             User newUser = userMapper.userCreateDtoToUser(userCreateDTO);
-            newUser.setTasks(new ArrayList<>());
 
             userRepository.save(newUser);
 

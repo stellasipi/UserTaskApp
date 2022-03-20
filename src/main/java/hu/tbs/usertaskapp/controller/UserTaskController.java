@@ -1,14 +1,11 @@
 package hu.tbs.usertaskapp.controller;
 
-import hu.tbs.usertaskapp.model.dto.TaskInfoDTO;
-import hu.tbs.usertaskapp.model.dto.UserCreateDTO;
-import hu.tbs.usertaskapp.model.dto.UserInfoDTO;
-import hu.tbs.usertaskapp.model.dto.UserUpdateDTO;
+import hu.tbs.usertaskapp.model.dto.*;
 import hu.tbs.usertaskapp.service.TaskService;
 import hu.tbs.usertaskapp.service.UserService;
+import hu.tbs.usertaskapp.util.exception.TaskException;
 import hu.tbs.usertaskapp.util.exception.UserException;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
@@ -20,7 +17,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @AllArgsConstructor
-@Slf4j
 public class UserTaskController {
 
     private UserService userService;
@@ -64,28 +60,54 @@ public class UserTaskController {
     }
 
     @GetMapping(value = "/{user_id}/task", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<List<TaskInfoDTO>> getAllTasksForUser() {
-        return null;
+    public ResponseEntity<List<TaskInfoDTO>> getAllTasksForUser(@PathVariable(name = "user_id") Integer userId) {
+        try {
+            List<TaskInfoDTO> tasks = taskService.getAllTasksForUser(userId);
+            return ResponseEntity.ok(tasks);
+        } catch (UserException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping(value = "/{user_id}/task/{task_id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<TaskInfoDTO> getTaskForUser() {
-        return null;
+    public ResponseEntity<TaskInfoDTO> getTaskForUser(@PathVariable(name = "user_id") Integer userId, @PathVariable(name = "task_id") Integer taskId) {
+        try {
+            TaskInfoDTO task = taskService.getTaskForUser(userId, taskId);
+            return ResponseEntity.ok(task);
+        } catch (TaskException | UserException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping(value = "/{user_id}/task", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<TaskInfoDTO> createTask() {
-        return null;
+    public ResponseEntity<TaskInfoDTO> createTask(@PathVariable(name = "user_id") Integer userId, @Valid @RequestBody TaskCreateDTO taskCreateDTO, UriComponentsBuilder uriComponentsBuilder) {
+        try {
+            TaskInfoDTO task = taskService.createTask(userId, taskCreateDTO);
+            UriComponents uriComponents = uriComponentsBuilder.path("/user/{user_id}/task/{task_id}").buildAndExpand(userId, task.getId());
+            return ResponseEntity.created(uriComponents.toUri()).body(task);
+        } catch (UserException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping(value = "/{user_id}/task/{task_id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<TaskInfoDTO> updateTask() {
-        return null;
+    public ResponseEntity<TaskInfoDTO> updateTask(@PathVariable(name = "user_id") Integer userId, @PathVariable(name = "task_id") Integer taskId, @Valid @RequestBody TaskUpdateDTO taskUpdateDTO) {
+        try {
+            TaskInfoDTO task = taskService.updateTask(userId, taskId, taskUpdateDTO);
+            return ResponseEntity.ok(task);
+        } catch (TaskException | UserException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping(value = "/{user_id}/task/{task_id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<TaskInfoDTO> deleteTask() {
-        return null;
+    public ResponseEntity deleteTask(@PathVariable(name = "user_id") Integer userId, @PathVariable(name = "task_id") Integer taskId) {
+        try {
+            taskService.deleteTask(userId, taskId);
+            return ResponseEntity.ok().build();
+        } catch (TaskException | UserException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }
