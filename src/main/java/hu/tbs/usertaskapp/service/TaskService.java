@@ -13,6 +13,7 @@ import hu.tbs.usertaskapp.util.exception.TaskException;
 import hu.tbs.usertaskapp.util.exception.UserException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -118,6 +119,18 @@ public class TaskService {
             throw new TaskException("Task id does not exists or task id's user id does not match to the requested user id");
         } else {
             return true;
+        }
+    }
+
+    @Scheduled(fixedDelay = 300000)
+    private void checkIfTasksHadExpired() {
+        List<Task> expiredTasks = taskRepository.findByDateTimeBeforeAndStatus(LocalDateTime.now(), TaskStatus.PENDING);
+        if (!expiredTasks.isEmpty()) {
+            expiredTasks.stream().forEach(task -> {
+                task.setStatus(TaskStatus.DONE);
+                taskRepository.save(task);
+                log.info("Task id: " + task.getId() + " with task name: " + task.getName() + " updated to DONE");
+            });
         }
     }
 }
