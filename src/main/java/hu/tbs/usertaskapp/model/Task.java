@@ -11,6 +11,9 @@ import org.hibernate.annotations.Parameter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * The type Task.
+ */
 @Entity
 @Data
 @Builder
