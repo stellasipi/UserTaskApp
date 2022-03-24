@@ -30,10 +30,13 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
     private static List<User> testUsers;
+
     @InjectMocks
     private UserService userService;
+
     @Mock
     private UserRepository userRepository;
+
     @Spy
     private UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
