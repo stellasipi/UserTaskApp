@@ -42,7 +42,6 @@ public class UserServiceTest {
 
     @BeforeAll
     static void setUpTests() {
-        testUsers = null;
         User testUser1 = User.builder()
                 .id(1)
                 .firstName("Jared")

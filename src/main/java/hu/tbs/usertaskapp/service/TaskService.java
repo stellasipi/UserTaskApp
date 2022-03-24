@@ -123,7 +123,7 @@ public class TaskService {
     }
 
     @Scheduled(fixedDelay = 300000)
-    private void checkIfTasksHadExpired() {
+    public void checkIfTasksHadExpired() {
         List<Task> expiredTasks = taskRepository.findByDateTimeBeforeAndStatus(LocalDateTime.now(), TaskStatus.PENDING);
         if (!expiredTasks.isEmpty()) {
             expiredTasks.stream().forEach(task -> {
