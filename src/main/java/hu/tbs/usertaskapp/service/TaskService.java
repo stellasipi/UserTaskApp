@@ -22,6 +22,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Task service.
+ */
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -33,6 +36,13 @@ public class TaskService {
 
     private TaskMapper taskMapper;
 
+    /**
+     * Gets all tasks for user.
+     *
+     * @param userId the user id
+     * @return the all tasks for user
+     * @throws UserException the user exception
+     */
     public List<TaskInfoDTO> getAllTasksForUser(Integer userId) throws UserException {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
@@ -45,6 +55,15 @@ public class TaskService {
         }
     }
 
+    /**
+     * Gets task for user.
+     *
+     * @param userId the user id
+     * @param taskId the task id
+     * @return the task for user
+     * @throws TaskException the task exception
+     * @throws UserException the user exception
+     */
     public TaskInfoDTO getTaskForUser(Integer userId, Integer taskId) throws TaskException, UserException {
         Optional<User> user = userRepository.findById(userId);
         Optional<Task> task = taskRepository.findById(taskId);
@@ -60,6 +79,14 @@ public class TaskService {
         }
     }
 
+    /**
+     * Create task.
+     *
+     * @param userId        the user id
+     * @param taskCreateDTO the task create dto
+     * @return the task info dto
+     * @throws UserException the user exception
+     */
     public TaskInfoDTO createTask(Integer userId, TaskCreateDTO taskCreateDTO) throws UserException {
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
@@ -79,6 +106,16 @@ public class TaskService {
         }
     }
 
+    /**
+     * Update task.
+     *
+     * @param userId        the user id
+     * @param taskId        the task id
+     * @param taskUpdateDTO the task update dto
+     * @return the task info dto
+     * @throws TaskException the task exception
+     * @throws UserException the user exception
+     */
     public TaskInfoDTO updateTask(Integer userId, Integer taskId, TaskUpdateDTO taskUpdateDTO) throws TaskException, UserException {
         Optional<User> user = userRepository.findById(userId);
         Optional<Task> originalTask = taskRepository.findById(taskId);
@@ -97,6 +134,14 @@ public class TaskService {
         }
     }
 
+    /**
+     * Delete task.
+     *
+     * @param userId the user id
+     * @param taskId the task id
+     * @throws TaskException the task exception
+     * @throws UserException the user exception
+     */
     public void deleteTask(Integer userId, Integer taskId) throws TaskException, UserException {
         Optional<User> user = userRepository.findById(userId);
         Optional<Task> task = taskRepository.findById(taskId);
@@ -110,6 +155,15 @@ public class TaskService {
         }
     }
 
+    /**
+     * Is user and task exists.
+     *
+     * @param user the user
+     * @param task the task
+     * @return the boolean
+     * @throws TaskException the task exception
+     * @throws UserException the user exception
+     */
     public Boolean isUserAndTaskExists(Optional<User> user, Optional<Task> task) throws TaskException, UserException {
         if (!user.isPresent()) {
             log.error("User id does not exists");
@@ -122,8 +176,11 @@ public class TaskService {
         }
     }
 
+    /**
+     * Check if tasks had expired.
+     */
     @Scheduled(fixedDelay = 300000)
-    private void checkIfTasksHadExpired() {
+    public void checkIfTasksHadExpired() {
         List<Task> expiredTasks = taskRepository.findByDateTimeBeforeAndStatus(LocalDateTime.now(), TaskStatus.PENDING);
         if (!expiredTasks.isEmpty()) {
             expiredTasks.stream().forEach(task -> {

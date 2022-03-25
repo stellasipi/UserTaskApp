@@ -6,6 +6,9 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * DTO for update task.
+ */
 @Getter
 @Setter
 public class TaskUpdateDTO {

@@ -7,6 +7,9 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * DTO for create user.
+ */
 @Getter
 @Setter
 public class UserCreateDTO {

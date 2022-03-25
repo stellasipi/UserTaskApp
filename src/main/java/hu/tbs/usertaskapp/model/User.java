@@ -1,6 +1,7 @@
 package hu.tbs.usertaskapp.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,8 +11,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type User.
+ */
 @Entity
 @Data
+@Builder
 @Table(name = "\"user\"")
 @AllArgsConstructor
 @NoArgsConstructor

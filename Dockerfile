@@ -3,4 +3,4 @@ RUN mkdir -p /build
 RUN mkdir -p /build/logs
 WORKDIR /build
 COPY pom.xml /build
-RUN mvn clean install
+RUN mvn clean install -Pprod -DskipTests

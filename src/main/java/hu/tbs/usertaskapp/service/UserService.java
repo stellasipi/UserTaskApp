@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * User service.
+ */
 @Service
 @Slf4j
 @AllArgsConstructor
@@ -24,11 +27,23 @@ public class UserService {
 
     private UserMapper userMapper;
 
+    /**
+     * Gets all users.
+     *
+     * @return the all users
+     */
     public List<UserInfoDTO> getAllUsers() {
         log.info("All users are listed");
         return userRepository.findAll().stream().map(user -> userMapper.userToUserInfoDto(user)).collect(Collectors.toList());
     }
 
+    /**
+     * Gets user.
+     *
+     * @param userId the user id
+     * @return the user
+     * @throws UserException the user exception
+     */
     public UserInfoDTO getUser(Integer userId) throws UserException {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
@@ -40,6 +55,13 @@ public class UserService {
         }
     }
 
+    /**
+     * Create user.
+     *
+     * @param userCreateDTO the user create dto
+     * @return the user info dto
+     * @throws UserException the user exception
+     */
     public UserInfoDTO createUser(UserCreateDTO userCreateDTO) throws UserException {
         Optional<User> user = userRepository.findByUsername(userCreateDTO.getUsername());
         if (user.isPresent()) {
@@ -55,6 +77,14 @@ public class UserService {
         }
     }
 
+    /**
+     * Update user.
+     *
+     * @param id          the id
+     * @param updatedUser the updated user
+     * @return the user info dto
+     * @throws UserException the user exception
+     */
     public UserInfoDTO updateUser(Integer id, UserUpdateDTO updatedUser) throws UserException {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
