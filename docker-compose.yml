@@ -14,7 +14,7 @@ services:
     volumes:
       - "./src:/build/src"
       - "./target:/build/target:cached"
-    command: "mvn spring-boot:run"
+    command: "mvn spring-boot:run -Dspring-boot.run.profiles=prod"
     depends_on:
       - usertask_db
   usertask_db:
