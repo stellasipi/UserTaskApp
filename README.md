@@ -14,8 +14,8 @@ The application manages users with their tasks. The API allows you to create, li
 - containerization: Docker (production-only)
 
 ## Getting Started
-If you plan to run the tests and/or the application locally, first you need to create a local PostgreSQL schema, with the following:
-- **schema name:** usertaskdb
+If you plan to run the tests and/or the application locally, first you need to create a local PostgreSQL database, with the following:
+- **database name:** usertaskdb
 - **username:** usertask_user
 - **password:** usertask_password
 
